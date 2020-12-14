@@ -1,0 +1,29 @@
+#
+
+resources:
+- name: myfirstvm
+  #gcloud deployment-manager types list | grep instance
+  type: compute.v1.instance
+  properties:
+    #gcloud compute zones list
+    zone: us-central1-a
+    #gcloud compute machine-types list
+    #gcloud compute machine-type describe f1-micro --zone us-central1-a | grep selfLink
+    machineType: https://www.googleapis.com/compute/v1/projects/[PROJECT_ID]/zones/us-central1-a/machineTypes/f1-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+      #gcloud compute images list
+      #gcloud compute images list | grep debian
+      #gcloud compute images describe debian-10-buster-v20201112 --project debian-cloud | grep selfLink 
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-10-buster-v20201112
+    networkInterfaces:
+    #gcloud compute networks list
+    #gcloud compute networks describe default | grep selfLink
+    - network:  https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-01-e29972b933fb/global/networks/default
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
