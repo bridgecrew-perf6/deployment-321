@@ -1,4 +1,4 @@
-#
+#gcloud deployment-manager deployments create my-first-deployment --config my-first-config.yaml
 
 resources:
 - name: myfirstvm
